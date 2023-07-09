@@ -56,9 +56,9 @@ class Player:
 
     def draw(self, screen):
         if(DEBUG):
-            pygame.draw.rect(screen, RED, self.rect)
-            pygame.draw.rect(screen, BLUE, self.ground_collition_rect)
-            pygame.draw.rect(screen, GREEN, self.body_collition_rect)
+            pygame.draw.rect(screen, C_RED, self.rect)
+            pygame.draw.rect(screen, C_BLUE, self.ground_collition_rect)
+            pygame.draw.rect(screen, C_GREEN, self.body_collition_rect)
         self.image = self.animation[self.frame]
         screen.blit(self.image, self.rect)
     

@@ -13,6 +13,6 @@ class Plataforma:
 
     def draw(self, screen):
         if(DEBUG):
-            pygame.draw.rect(screen, BLUE, self.collider)
+            pygame.draw.rect(screen, C_BLUE, self.collider)
         screen.blit(self.image, self.rect)
         

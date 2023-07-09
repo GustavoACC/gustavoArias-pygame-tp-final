@@ -40,7 +40,7 @@ class Trap:
     
     def draw(self, screen):
         if(DEBUG):
-            pygame.draw.rect(screen, RED, self.collider)
+            pygame.draw.rect(screen, C_RED, self.collider)
         self.image = self.animation[self.frame]
         screen.blit(self.image, self.rect)
 
