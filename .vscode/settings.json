@@ -1,0 +1,9 @@
+{
+    "python.analysis.extraPaths": [
+        "./class/player"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none"
+}
