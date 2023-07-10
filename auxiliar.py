@@ -1,5 +1,7 @@
 import pygame
 from constantes import *
+import json
+import csv
 
 class Auxiliar:
     def getSurfaceFromSpriteSheet(path, columnas, filas, flip = False):
@@ -20,4 +22,14 @@ class Auxiliar:
                 lista.append(surface_fotograma)
         return lista
         
+    def getJsonValues(path):
+        with open(path) as archivo:
+            return json.load(archivo)
         
+    def getCsvValues(path):
+        with open(path) as archivo:
+            csv_filas = []
+            csv_reader = csv.reader(archivo)
+            for row in csv_reader:
+                csv_filas.append(row)
+            return csv_filas

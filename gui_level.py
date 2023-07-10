@@ -3,7 +3,7 @@ from constantes import *
 from pygame.locals import *
 from auxiliar import *
 pygame.init()
-font_vidas = pygame.font.SysFont("Arial", 15)
+font_vidas = pygame.font.Font("fonts/Minecraft.ttf", 15)
 
 class Gui_Level:
 

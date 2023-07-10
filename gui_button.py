@@ -5,8 +5,8 @@ from constantes import *
 
 
 class Button(Widget):
-    def __init__(self,master,x=0,y=0,w=200,h=50,color_background=C_GREEN,color_border=C_RED,image_background=None,text="Button",font="Arial",font_size=14,font_color=C_BLUE,on_click=None,on_click_param=None):
-        super().__init__(master,x,y,w,h,color_background,color_border,image_background,text,font,font_size,font_color)
+    def __init__(self,master,x=0,y=0,w=200,h=50,color_border=C_RED,image_background=None,text="Button",font="Arial",font_size=14,font_color=C_BLUE,on_click=None,on_click_param=None):
+        super().__init__(master,x,y,w,h,color_border,image_background,text,font,font_size,font_color)
         self.on_click = on_click
         self.on_click_param = on_click_param
         self.state = M_STATE_NORMAL

@@ -3,13 +3,12 @@ from pygame.locals import *
 from constantes import *
 
 class Widget:
-    def __init__(self,master_form,x,y,w,h,color_background,color_border,image_background,text,font,font_size,font_color):
+    def __init__(self,master_form,x,y,w,h,color_border,image_background,text,font,font_size,font_color):
         self.master_form = master_form
         self.x = x
         self.y = y
         self.w = w
         self.h = h
-        self.color_background = color_background
         self.color_border = color_border
         if image_background != None:
             self.image_background = pygame.image.load(image_background)
@@ -19,7 +18,7 @@ class Widget:
         self._text = text
         if(self._text != None):
             pygame.font.init()
-            self._font_sys = pygame.font.SysFont(font,font_size)
+            self._custom_font = pygame.font.Font(font,font_size)
             self._font_color = font_color
 
     def render(self):
@@ -31,15 +30,12 @@ class Widget:
         self.slave_rect_collide = pygame.Rect(self.slave_rect)
         self.slave_rect_collide.x += self.master_form.x
         self.slave_rect_collide.y += self.master_form.y
-
-        if self.color_background:
-            self.slave_surface.fill(self.color_background)
         
         if self.image_background:
             self.slave_surface.blit(self.image_background,(0,0))
         
         if(self._text != None):
-            image_text = self._font_sys.render(self._text,True,self._font_color,self.color_background)
+            image_text = self._custom_font.render(self._text,True,self._font_color)
             self.slave_surface.blit(image_text,[
                 self.slave_rect.width/2 - image_text.get_rect().width/2,
                 self.slave_rect.height/2 - image_text.get_rect().height/2

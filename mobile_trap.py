@@ -13,7 +13,7 @@ class Trap:
                     self.init_animation = Auxiliar.getSurfaceFromSpriteSheet("recursos/traps/saw/On (38x38).png", 8, 1,flip = True)
         
 
-    def __init__(self, init_x = 0, init_y = 0, min_x = 0, max_x = 0, min_y = 0, max_y = 0, velocidad = 0, movimiento = 'n', type = 0, sub_type = 0, col_rest = 0) -> None:
+    def __init__(self, init_x = 0, init_y = 0, min_x = 0, max_x = 0, min_y = 0, max_y = 0, velocidad = 0, movimiento = 'n', type = 0, sub_type = 0, col_rest = 0):
         self.type = type
         self.sub_type = sub_type
         self.iniciar_sprites()
@@ -70,7 +70,7 @@ class Trap:
                     self.movimiento = 'r'
             case 'u':
                 self.add_y(self.velocidad * -1)
-                if self.rect.y <= self.min_x:
+                if self.rect.y <= self.min_y:
                     self.movimiento = 'd'
             case 'd':
                 self.add_y(self.velocidad)
