@@ -96,10 +96,8 @@ class Player:
                 
     
     def apply_colision_pared_vertical(self, lista_paredes, delta_y):
-        retorno = False
         for pared in lista_paredes:
             if pared.rect.colliderect(self.vertical_collition_rect):
-                retorno = True
                 if delta_y > 0:
                     self.rect.bottom = pared.rect.top
                     self.update_collition_position()
@@ -109,7 +107,6 @@ class Player:
                     self.update_collition_position()
                     self.solto_tecla_salto = True
                     self.flag_salto_disponible = False
-        return retorno
 
     def is_colision_vertical(self, lista_paredes, delta_y):
         retorno = False
@@ -124,11 +121,9 @@ class Player:
         self.ground_collition_rect = pygame.Rect(self.rect.x + self.rect.w / 2.5, (self.rect.y + self.rect.h), self.rect.w / 2.5, 2)
         self.body_collition_rect = pygame.Rect(self.rect.x + self.rect.w / 3.5, self.rect.y + self.rect.h / 3.5, self.rect.w / 2, self.rect.h / 1.5)
 
-    def is_laterals_colision(self):
+    def is_max_min_height(self):
         retorno = False
-        if self.rect.x <= LEFT_LEVEL or self.rect.x >= RIGHT_LEVEL:
-            retorno = True
-        elif self.rect.y >= GROUND_LEVEL or self.rect.y <= HIGH_LEVEL:
+        if self.rect.y >= GROUND_LEVEL or self.rect.y <= HIGH_LEVEL:
             retorno = True
         return retorno
 
@@ -171,7 +166,7 @@ class Player:
                 self.animation = self.idle_l
 
     def aplicar_gravedad(self):
-        if not self.is_laterals_colision() and not self.is_on_plataforma(self.lista_plataformas) and not self.is_colision_vertical(self.lista_paredes, GRAVEDAD):
+        if not self.is_max_min_height() and not self.is_on_plataforma(self.lista_plataformas) and not self.is_colision_vertical(self.lista_paredes, GRAVEDAD):
             self.do_movement("FALL", y = GRAVEDAD)
             self.aplicando_gravedad = True
         else:
