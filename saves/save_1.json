@@ -14,27 +14,5 @@
 		"level_1": 0,
 		"level_2": 0,
 		"level_3": 0
-	},
-	"achievements": [
-		{
-			"description": "gotta go fast",
-			"unlock": 0,
-			"image_path": ""
-		},
-		{
-			"description": "it's over 9000",
-			"unlock": 0,
-			"image_path": ""
-		},
-		{
-			"description": "you died",
-			"unlock": 0,
-			"image_path": ""
-		},
-		{
-			"description": "no hit",
-			"unlock": 0,
-			"image_path": ""
-		}
-	]
+	}
 }

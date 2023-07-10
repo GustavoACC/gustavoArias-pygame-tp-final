@@ -1,7 +1,7 @@
 import pygame
 pygame.mixer.init()
 
-DEBUG = False
+DEBUG = True
 ALTO_PANTALLA = 768
 ANCHO_PANTALLA = 1088
 PATH_IMAGE = "recursos/"

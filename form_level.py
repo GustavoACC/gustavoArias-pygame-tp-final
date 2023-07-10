@@ -12,10 +12,15 @@ import time
 from form_main_menu import *
 from form_level import *
 from form_opciones import *
+from enemy import *
 
 class FormLevel(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, json_level, csv_level, sub_active):
-        super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active, sub_active, None)
+        '''
+        Constructor de la clase y pasaje de los valores a la clase padre
+        Inicializo las variables a utilizar
+        '''
+        super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active, sub_active)
         self.form_option_menu = FormOptionMenu(name="level_options", master_surface=master_surface, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=False,sub_active=False, previus_form_name=name)
         self.active = active
         self.name = name
@@ -27,6 +32,14 @@ class FormLevel(Form):
         self.finalizo_pausa = True
 
     def update(self, lista_eventos,keys,delta_ms):
+        '''
+        Update de la clase,
+        En caso de tener un sub formulario activo no actualizo los valores en las clases y guardo el tiempo estimado que estuvo en 
+        pausa para restarlo del contador total del nivel ya que el mismo utiliza el tiempo anterior con time
+        En caso de iniciarse el formulario por primera vez solicito la carga de valores inicial con el start_config
+        Valido en los eventos disponibles la tecla de Esc para comenzar una pausa, y la tecla F10 para un reset forzado al nivel
+        En caso de no estar en una pausa solicito la actualizacion de los objetos en pantalla asi como continuar el contador del tiempo disponible del nivel
+        '''
         aux_sub_active_form = Form.get_sub_active()
         if(aux_sub_active_form != None):
             self.finalizo_pausa = False
@@ -52,8 +65,6 @@ class FormLevel(Form):
                     self.mostrar_pausa()
         if self.pauseState == False:
             self.alpha = 0
-            # if not self.finalizo_pausa:
-            #     self.finalizo_pausa = True
             self.tiempo_transcurrido = time.time() - self.tiempo_inicio - self.tiempo_total_pausa
         else:
             self.alpha = 200
@@ -62,6 +73,8 @@ class FormLevel(Form):
             trampa.update(self.pauseState)
         for item in self.lista_items:
             item.update(self.player_instance, self, self.lista_items)
+        for enemigo in self.lista_enemigos:
+            enemigo.update(self.pauseState, self.lista_enemigos)
         self.tiempo_restante = self.tiempo_maximo - self.tiempo_transcurrido
         self.player_instance.controlar_jugador(keys, delta_ms, self.pauseState)
         self.player_instance.update(self.pauseState, self.tiempo_transcurrido, self)
@@ -71,6 +84,9 @@ class FormLevel(Form):
             self.mostrar_retry()
 
     def draw(self): 
+        '''
+        Metodo del dibujado los objetos en pantalla
+        '''
         super().draw()
         self.screen.blit(self.solid_background, self.solid_background.get_rect())
         for plataforma in self.lista_plataformas:
@@ -80,13 +96,18 @@ class FormLevel(Form):
         for trampa in self.lista_trampas:
             trampa.draw(self.screen)
         for item in self.lista_items:
-            item.draw()
+            item.draw(self.screen)
+        for enemigo in self.lista_enemigos:
+            enemigo.draw(self.screen)
         self.player_instance.draw(self.screen)
         self.gui_player.draw(self.screen)
         self.solidImagePause.set_alpha(self.alpha)
         self.screen.blit(self.solidImagePause, self.solidImagePause.get_rect())
 
     def carga_inicial_listas(self):
+        '''
+        Inicializo las listas desde cero cargandolos según los datos en el Json solicitado
+        '''
         self.lista_plataformas = []
         for plataforma in self.config_level["plataformas"]:
             self.lista_plataformas.append(Plataforma(plataforma["x"],plataforma["y"],plataforma["w"],plataforma["h"],plataforma["coll_w"],plataforma["coll_h"],plataforma["type"]))
@@ -105,21 +126,39 @@ class FormLevel(Form):
         
         self.lista_items = []
         for item in self.config_level["items"]:
-            self.lista_items.append(Item(self.screen, item["x"], item["y"], int(item["puntos"]), int(item["type"])))
+            self.lista_items.append(Item(item["x"], item["y"], int(item["puntos"]), int(item["type"])))
+        
+        self.lista_enemigos = []
+        self.lista_enemigos.append(Enemy(385,355, VELOCIDAD_X))
 
     def carga_inicial_jugador(self):
+        '''
+        Inicializo el jugador según los valores del Json y le paso las listas cargadas de los objetos para validar las colisiones necesarias
+        '''
         self.player_instance = Player(self.config_level["player"]["x"],self.config_level["player"]["y"],self.config_level["player"]["vidas"],self.lista_plataformas, self.lista_trampas, self.lista_paredes)
 
     def cargar_fondo_estatico(self, path):
+        '''
+        Guardo cual es fondo del nivel para poder dibujarlo entre frames
+        '''
         self.solid_background = pygame.image.load(path)
     
     def cargar_json_level(self, json_path):
+        '''
+        Cargo los valores del json en una variable para que toda la clase pueda acceder
+        '''
         self.config_level = Auxiliar.getJsonValues(json_path)
     
     def cargar_csv_level(self, csv_path):
+        '''
+        Cargo los valores del csv en una variable para que toda la clase pueda acceder
+        '''
         self.paredes_level = Auxiliar.getCsvValues(csv_path)
 
     def start_config(self):
+        '''
+        Inicializo las variables para un inicio de la partida, incluida las cargas e inicio de la musica
+        '''
         self.tiempo_inicio_pausa = time.time()
         self.tiempo_transcurrido_en_pausa = 0
         self.tiempo_total_pausa = 0
@@ -140,19 +179,27 @@ class FormLevel(Form):
         Auxiliar.playMusic(self.config_level["music"])
 
     def mostrar_pausa(self):
+        '''
+        Habilito el sub formulario y establezco la flag para no actualizar los valores de los objetos
+        '''
         self.pauseState = True
         Form.set_true_sub_active("level_options")
 
     def mostrar_retry(self):
+        '''
+        En caso de perder el nivel reproduzco un sonido e inicio la partida nuevamente
+        '''
         self.finalizo_nivel = True
         self.pauseState = True
         LOSE.play()
-        # Form.set_true_sub_active("level_options")
         self.start_config()
 
     def mostrar_victoria(self):
+        '''
+        En caso de completar el objetivo del nivel muestro un sub formulario para volver al menu o jugar el siguiente nivel
+        Tambien valido el score del jugador para guardarlo si es necesario
+        '''
         self.finalizo_nivel = True
         self.pauseState = True
         print("CARGAR FORM VICTORIA")
         # revisar en bd si supero puntaje
-        # unlock level 2

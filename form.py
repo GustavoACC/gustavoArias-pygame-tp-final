@@ -5,7 +5,7 @@ from constantes import *
 
 class Form():
     forms_dict = {}
-    def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, sub_active, image_background: None):
+    def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, sub_active):
         self.forms_dict[name] = self
         self.master_surface = master_surface
         self.x = x
@@ -24,10 +24,8 @@ class Form():
         self.x = x
         self.y = y
 
-        if(image_background):
-            self.image_background = pygame.image.load(image_background)
-            self.image_background = pygame.transform.scale(self.image_background, (ANCHO_PANTALLA, ALTO_PANTALLA))
-            self.surface.blit(self.image_background, self.image_background.get_rect())
+        if(self.color_background != None):
+            self.surface.fill(self.color_background)
     
     @staticmethod
     def set_active(name):

@@ -5,6 +5,9 @@ from auxiliar import *
 
 class Trap:
     def iniciar_sprites(self):
+        '''
+        Guardo la lista de sprites a utilizar segun el tipo solicitado
+        '''
         match(self.type):
             case 0:
                 if self.sub_type == 0:
@@ -14,6 +17,10 @@ class Trap:
         
 
     def __init__(self, init_x = 0, init_y = 0, min_x = 0, max_x = 0, min_y = 0, max_y = 0, velocidad = 0, movimiento = 'n', type = 0, sub_type = 0, col_rest = 0):
+        '''
+        Constructor de la clase,
+        inicializo los valores según las variables proporcionadas
+        '''
         self.type = type
         self.sub_type = sub_type
         self.iniciar_sprites()
@@ -33,32 +40,54 @@ class Trap:
         self.collider = pygame.Rect(self.rect.x + col_rest / 2, self.rect.y + col_rest / 2, self.rect.w - col_rest, self.rect.h - col_rest)
     
     def update(self, pauseState):
+        '''
+        Update de la clase, 
+        en caso de estar en pausa no actualizo valores
+        '''
         if pauseState == True:
             return
         self.do_move()
         self.do_animation()
     
     def draw(self, screen):
+        '''
+        Dibujado de la clase
+        '''
         if(DEBUG):
             pygame.draw.rect(screen, C_RED, self.collider)
         self.image = self.animation[self.frame]
         screen.blit(self.image, self.rect)
 
     def do_animation(self):
+        '''
+        Actualizo el siguiente sprite a utilizar
+        '''
         if(self.frame < len(self.animation) - 1):
             self.frame += 1
         else:
             self.frame = 0
     
     def add_x(self, delta_x):
+        '''
+        Movimiento en eje X,
+        Agrego el valor al eje X sin revisar colisiones
+        '''
         self.rect.x += delta_x
         self.collider.x += delta_x
 
     def add_y(self, delta_y):
+        '''
+        Movimiento en eje Y,
+        Agrego el valor al eje Y sin revisar colisiones
+        '''
         self.rect.y += delta_y
         self.collider.y += delta_y
     
     def do_move(self):
+        '''
+        Dependiendo de movimiento solicitado muevo en eje X o Y
+        entre los limites establecidos por variables en el constructor
+        '''
         match(self.movimiento):
             case 'r':
                 self.add_x(self.velocidad)

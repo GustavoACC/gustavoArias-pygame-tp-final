@@ -5,7 +5,7 @@ from auxiliar import *
 
 class FormSelectorMenu(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, sub_active, previus_form_name):
-        super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active, sub_active, None)
+        super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active, sub_active)
         self.previus_form_name = previus_form_name
         
         self.boton_level_1 = Button(master=self,x=446,y=150,w=170,h=50,image_background="UI_Flat_Frame_01_Horizontal.png", on_click=self.on_click_active_form, on_click_param="level_1", text="Level 1", font="fonts/Minecraft.ttf", font_size=30, font_color=C_WHITE)
