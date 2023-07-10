@@ -7,6 +7,7 @@ class Item():
     def __init__(self, screen, x, y, puntos, type):
         self.screen = screen
         self.puntos = puntos
+        self.type = type
         self.frame = 0
         self.animation = self.iniciar_sprites(type)
         self.image = self.animation[self.frame]
@@ -45,9 +46,18 @@ class Item():
                 
     def is_colision(self, player, form, lista_items):
         if self.rect.colliderect(player.rect):
-            general_config = Auxiliar.getJsonValues(GENERAL_CONFIG_JSON)
-            TAKE_ITEM.set_volume(general_config["volume"])
-            TAKE_ITEM.play()
             form.puntaje_total += self.puntos
+            self.play_sound()
+            if self.type == 10:
+                form.mostrar_victoria()
             lista_items.remove(self)
             
+    def play_sound(self):
+        general_config = Auxiliar.getJsonValues(GENERAL_CONFIG_JSON)
+        match self.type:
+            case 10:
+                VICTORY_ITEM.set_volume(general_config["volume"])
+                VICTORY_ITEM.play()
+            case _:
+                TAKE_ITEM.set_volume(general_config["volume"])
+                TAKE_ITEM.play()

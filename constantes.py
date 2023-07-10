@@ -18,6 +18,10 @@ GENERAL_CONFIG_JSON = "general_config.json"
 
 # Sonidos
 TAKE_ITEM = pygame.mixer.Sound("sounds/mixkit-arcade-retro-changing-tab-206.wav")
+VICTORY_ITEM = pygame.mixer.Sound("sounds/mixkit-arcade-game-complete-or-approved-mission-205.wav")
+LOSE = pygame.mixer.Sound("sounds/mixkit-player-losing-or-failing-2042.wav")
+HIT = pygame.mixer.Sound("sounds/mixkit-small-hit-in-a-game-2072.wav")
+ACHIVEMENT = pygame.mixer.Sound("sounds/mixkit-quick-positive-video-game-notification-interface-265.wav")
 
 # Colores fijos
 C_RED = (255,0,0)

@@ -276,6 +276,12 @@
             "y": 700,
             "puntos": 100,
             "type": 0
+        },
+        {
+            "x": 725,
+            "y": 223,
+            "puntos": 1000,
+            "type": 10
         }
     ],
     "player": {
@@ -283,6 +289,6 @@
         "y": 630,
         "vidas": 2
     },
-    "tiempo": 120,
+    "tiempo": 10,
     "music": "music/Level music #1.mp3"
 }

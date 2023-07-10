@@ -18,6 +18,7 @@ class FormLevel(Form):
         self.json_level = json_level
         self.csv_level = csv_level
         self.flag_inicio = False
+        self.finalizo_nivel = False
 
     def update(self, lista_eventos,keys,delta_ms):
         if self.active and self.flag_inicio == False:
@@ -26,24 +27,29 @@ class FormLevel(Form):
         for event in lista_eventos:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                     self.pauseState = not  self.pauseState
+                     self.pauseState = not self.pauseState
                 if event.key == pygame.K_F10:
                     self.start_config()
+                if self.pauseState and not self.finalizo_nivel:
+                    self.mostrar_pausa()
+
         if self.pauseState == False:
             self.alpha = 0
             self.tiempo_transcurrido = time.time() - self.tiempo_inicio
         else:
             self.alpha = 200
+            return
         for trampa in self.lista_trampas:
             trampa.update(self.pauseState)
         for item in self.lista_items:
             item.update(self.player_instance, self, self.lista_items)
-        if self.tiempo_restante <= 0:
-            self.finalizo_nivel = True
-            self.mostrar_retry()
+        self.tiempo_restante = self.tiempo_maximo - self.tiempo_transcurrido
         self.player_instance.controlar_jugador(keys, delta_ms, self.pauseState)
-        self.player_instance.update(self.pauseState, self.tiempo_transcurrido)
-        self.gui_player.update(self.player_instance.vidas, self.puntaje_total, self.tiempo_restante - self.tiempo_transcurrido)
+        self.player_instance.update(self.pauseState, self.tiempo_transcurrido, self)
+        self.gui_player.update(self.player_instance.vidas, self.puntaje_total, self.tiempo_restante)
+        if self.tiempo_restante <= 0:
+            self.tiempo_restante = 0
+            self.mostrar_retry()
 
     def draw(self): 
         super().draw()
@@ -103,22 +109,28 @@ class FormLevel(Form):
         self.alpha = 0
         self.cargar_fondo_estatico("levels/level-1/background_1.png")
         self.cargar_json_level(self.json_level)
-        self.tiempo_restante = self.config_level["tiempo"]
+        self.tiempo_maximo = self.config_level["tiempo"]
         self.cargar_csv_level(self.csv_level)
         self.carga_inicial_listas()
         self.carga_inicial_jugador()
-        self.gui_player = Gui_Level(self.player_instance.vidas, self.puntaje_total, self.tiempo_restante)
+        self.gui_player = Gui_Level(self.player_instance.vidas, self.puntaje_total, self.tiempo_maximo)
         Auxiliar.playMusic(self.config_level["music"])
 
-    def mostrar_pausa():
+    def mostrar_pausa(self):
+        self.pauseState = True
         print("CARGAR FORM PAUSA")
         pass
 
-    def mostrar_retry():
+    def mostrar_retry(self):
+        self.finalizo_nivel = True
+        self.pauseState = True
+        LOSE.play()
         print("CARGAR FORM DERROTA")
         pass
 
-    def mostrar_victoria():
+    def mostrar_victoria(self):
+        self.finalizo_nivel = True
+        self.pauseState = True
         print("CARGAR FORM VICTORIA")
         # revisar en bd si supero puntaje
         # unlock level 2

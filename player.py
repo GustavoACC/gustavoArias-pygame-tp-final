@@ -45,13 +45,13 @@ class Player:
         self.update_collition_position()
         
     
-    def update(self, pauseState, delta_ms):
+    def update(self, pauseState, delta_ms, form):
         if pauseState == True:
             return
         self.do_animation()
         if self.is_golpeado == False:
             self.image.set_alpha(200)
-            self.is_colision_enemigo(self.lista_trampas, delta_ms)
+            self.is_colision_enemigo(self.lista_trampas, delta_ms, form)
         else:
             self.is_invulnerable(delta_ms)
 
@@ -127,12 +127,15 @@ class Player:
             retorno = True
         return retorno
 
-    def is_colision_enemigo(self, lista_trampas, delta_ms):
+    def is_colision_enemigo(self, lista_trampas, delta_ms, form):
         for trampa in lista_trampas:
             if self.body_collition_rect.colliderect(trampa.collider):
+                HIT.play()
                 self.vidas -= 1
                 self.is_golpeado = True
                 self.tiempo_invulnerable = delta_ms +  2
+                if self.vidas == 0:
+                    form.mostrar_retry()
                 
     def is_invulnerable(self, delta_ms):
         if self.is_golpeado == True:

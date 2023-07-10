@@ -8,7 +8,7 @@ class FormOptionMenu(Form):
         super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active)
         self.boton_subir_volumen = Button(master=self,x=446,y=205,w=250,h=50,image_background="UI_Flat_Frame_01_Horizontal.png", on_click=self.on_click_modificar_volumen, on_click_param=0.1, text="Subir Volumen", font="fonts/Minecraft.ttf", font_size=30, font_color=C_WHITE)
         self.boton_bajar_volumen = Button(master=self,x=446,y=275,w=250,h=50,image_background="UI_Flat_Frame_01_Horizontal.png", on_click=self.on_click_modificar_volumen, on_click_param=-0.1, text="Bajar Volumen", font="fonts/Minecraft.ttf", font_size=30, font_color=C_WHITE)
-        self.boton_volver = Button(master=self,x=446,y=335,w=140,h=100,image_background="UI_Flat_Frame_01_Horizontal.png", on_click=self.on_click_volver, on_click_param=None, text="Volver", font="fonts/Minecraft.ttf", font_size=30, font_color=C_WHITE)
+        self.boton_volver = Button(master=self,x=502,y=335,w=140,h=50,image_background="UI_Flat_Frame_01_Horizontal.png", on_click=self.on_click_volver, on_click_param=None, text="Volver", font="fonts/Minecraft.ttf", font_size=30, font_color=C_WHITE)
 
         self.lista_widget = [self.boton_subir_volumen, self.boton_bajar_volumen, self.boton_volver]
 

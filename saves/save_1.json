@@ -30,6 +30,11 @@
 			"description": "you died",
 			"unlock": "False",
 			"image_path": ""
+		},
+		{
+			"description": "no hit",
+			"unlock": "False",
+			"image_path": ""
 		}
 	]
 }
