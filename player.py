@@ -58,6 +58,7 @@ class Player:
     def draw(self, screen):
         if(DEBUG):
             pygame.draw.rect(screen, C_BLACK, self.ground_collition_rect)
+            pygame.draw.rect(screen, C_ORANGE, self.body_collition_rect)
             pygame.draw.rect(screen, C_BLUE, self.rect)
             pygame.draw.rect(screen, C_RED, self.vertical_collition_rect)
         self.image = self.animation[self.frame]
@@ -94,7 +95,6 @@ class Player:
                 self.rect.x -= delta_x
                 self.update_collition_position()
                 
-    
     def apply_colision_pared_vertical(self, lista_paredes, delta_y):
         for pared in lista_paredes:
             if pared.rect.colliderect(self.vertical_collition_rect):

@@ -18,22 +18,22 @@
 	"achievements": [
 		{
 			"description": "gotta go fast",
-			"unlock": "False",
+			"unlock": 0,
 			"image_path": ""
 		},
 		{
 			"description": "it's over 9000",
-			"unlock": "False",
+			"unlock": 0,
 			"image_path": ""
 		},
 		{
 			"description": "you died",
-			"unlock": "False",
+			"unlock": 0,
 			"image_path": ""
 		},
 		{
 			"description": "no hit",
-			"unlock": "False",
+			"unlock": 0,
 			"image_path": ""
 		}
 	]

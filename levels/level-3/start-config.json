@@ -1,15 +1,6 @@
 {
     "plataformas": [
         {
-            "x": 144,
-            "y": 688,
-            "w": 16,
-            "h": 16,
-            "coll_w": 16,
-            "coll_h": 5,
-            "type": 17
-        },
-        {
             "x": 160,
             "y": 688,
             "w": 16,
@@ -410,6 +401,6 @@
         "y": 630,
         "vidas": 2
     },
-    "tiempo": 120,
-    "music": "music/Level music #1.mp3"
+    "tiempo": 40,
+    "music": "music/Level music #3.mp3"
 }

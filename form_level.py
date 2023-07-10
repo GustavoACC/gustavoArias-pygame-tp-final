@@ -15,9 +15,10 @@ from form_opciones import *
 
 class FormLevel(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, json_level, csv_level, sub_active):
-        super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active, sub_active)
-        self.form_option_menu = FormOptionMenu(name="level_1_options", master_surface=master_surface, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=False,sub_active=False, previus_form_name="level_1")
+        super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active, sub_active, None)
+        self.form_option_menu = FormOptionMenu(name="level_options", master_surface=master_surface, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=False,sub_active=False, previus_form_name=name)
         self.active = active
+        self.name = name
         self.screen = master_surface
         self.json_level = json_level
         self.csv_level = csv_level
@@ -140,14 +141,14 @@ class FormLevel(Form):
 
     def mostrar_pausa(self):
         self.pauseState = True
-        Form.set_true_sub_active("level_1_options")
+        Form.set_true_sub_active("level_options")
 
     def mostrar_retry(self):
         self.finalizo_nivel = True
         self.pauseState = True
         LOSE.play()
-        Form.set_true_sub_active("level_1_options")
-        print("CARGAR FORM DERROTA")
+        # Form.set_true_sub_active("level_options")
+        self.start_config()
 
     def mostrar_victoria(self):
         self.finalizo_nivel = True

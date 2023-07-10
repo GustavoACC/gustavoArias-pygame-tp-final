@@ -39,6 +39,8 @@ class Item():
                 return Auxiliar.getSurfaceFromSpriteSheet("recursos/Items/Fruits/Apple.png", 17, 1)
             case 1:
                 return Auxiliar.getSurfaceFromSpriteSheet("recursos/Items/Fruits/Bananas.png", 17, 1)
+            case 2:
+                return Auxiliar.getSurfaceFromSpriteSheet("recursos/Items/Fruits/Strawberry.png", 17, 1)
             case 10:
                 return Auxiliar.getSurfaceFromSpriteSheet("recursos/Items/Checkpoints/End/End (Pressed) (64x64).png", 8, 1)
             case _:
