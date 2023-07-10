@@ -4,7 +4,7 @@ from gui_button import Button
 
 class Form():
     forms_dict = {}
-    def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active):
+    def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, sub_active):
         self.forms_dict[name] = self
         self.master_surface = master_surface
         self.x = x
@@ -19,6 +19,7 @@ class Form():
         self.slave_rect.x = x
         self.slave_rect.y = y
         self.active = active
+        self.sub_active = sub_active
         self.x = x
         self.y = y
 
@@ -37,6 +38,24 @@ class Form():
             if(aux_form.active):
                 return aux_form
         return None
+    
+    @staticmethod
+    def get_sub_active():
+        for aux_form in Form.forms_dict.values():
+            if(aux_form.sub_active):
+                return aux_form
+        return None
+
+    @staticmethod
+    def set_true_sub_active(name):
+        for aux_form in Form.forms_dict.values():
+            aux_form.sub_active = False
+        Form.forms_dict[name].sub_active = True
+    
+    @staticmethod
+    def set_false_sub_active():
+        for aux_form in Form.forms_dict.values():
+            aux_form.sub_active = False
     
     def render(self):
         pass

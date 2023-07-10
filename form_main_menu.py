@@ -4,8 +4,8 @@ from form import *
 from auxiliar import *
 
 class FormMainMenu(Form):
-    def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active):
-        super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active)
+    def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, sub_active):
+        super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active, sub_active)
         self.active = active
         self.inicio = False
         self.boton_jugar = Button(master=self,x=446,y=205,w=170,h=50,image_background="UI_Flat_Frame_01_Horizontal.png", on_click=self.on_click_active_form, on_click_param="level_1", text="Level 1", font="fonts/Minecraft.ttf", font_size=30, font_color=C_WHITE)

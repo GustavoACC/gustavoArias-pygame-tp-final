@@ -16,9 +16,9 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Inicio los Forms
-form_main_menu = FormMainMenu(name="main_menu", master_surface=screen, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=True)
-form_level_1 = FormLevel(name="level_1", master_surface=screen, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=False, json_level="levels/level-1/start-config.json", csv_level="levels/level-1/paredes_level_1.csv")
-form_option_menu = FormOptionMenu(name="options_menu", master_surface=screen, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=True)
+form_main_menu = FormMainMenu(name="main_menu", master_surface=screen, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=True, sub_active=False)
+form_level_1 = FormLevel(name="level_1", master_surface=screen, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=False, json_level="levels/level-1/start-config.json", csv_level="levels/level-1/paredes_level_1.csv", sub_active=False)
+form_option_menu = FormOptionMenu(name="options_menu", master_surface=screen, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=True,sub_active=False, previus_form_name="main_menu")
 
 while True:
     lista_eventos = pygame.event.get()
@@ -32,8 +32,12 @@ while True:
     keys = pygame.key.get_pressed()
 
     aux_form_active = Form.get_active()
+    aux_form_sub_active = Form.get_sub_active()
     if(aux_form_active != None):
         aux_form_active.update(lista_eventos,keys,delta_ms)
         aux_form_active.draw()
+    if(aux_form_sub_active != None):
+        aux_form_sub_active.update(lista_eventos, keys, delta_ms)
+        aux_form_sub_active.draw()
 
     pygame.display.flip()

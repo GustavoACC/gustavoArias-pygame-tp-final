@@ -9,18 +9,34 @@ from form import *
 from auxiliar import *
 from item import *
 import time
+from form_main_menu import *
+from form_level import *
+from form_opciones import *
 
 class FormLevel(Form):
-    def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, json_level, csv_level):
-        super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active)
+    def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, json_level, csv_level, sub_active):
+        super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active, sub_active)
+        self.form_option_menu = FormOptionMenu(name="level_1_options", master_surface=master_surface, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=False,sub_active=False, previus_form_name="level_1")
         self.active = active
         self.screen = master_surface
         self.json_level = json_level
         self.csv_level = csv_level
         self.flag_inicio = False
         self.finalizo_nivel = False
+        self.finalizo_pausa = True
 
     def update(self, lista_eventos,keys,delta_ms):
+        aux_sub_active_form = Form.get_sub_active()
+        if(aux_sub_active_form != None):
+            self.finalizo_pausa = False
+            return
+        else:
+            # Guardo el tiempo total de la pausa para poder restarlo del tiempo transcurrido
+            if not self.finalizo_pausa:
+                self.tiempo_transcurrido_en_pausa = time.time() - self.tiempo_inicio_pausa
+                self.tiempo_total_pausa += self.tiempo_transcurrido_en_pausa
+                self.finalizo_pausa = True
+            self.pauseState = False
         if self.active and self.flag_inicio == False:
             self.flag_inicio = True
             self.start_config()
@@ -31,11 +47,13 @@ class FormLevel(Form):
                 if event.key == pygame.K_F10:
                     self.start_config()
                 if self.pauseState and not self.finalizo_nivel:
+                    self.tiempo_inicio_pausa = time.time()
                     self.mostrar_pausa()
-
         if self.pauseState == False:
             self.alpha = 0
-            self.tiempo_transcurrido = time.time() - self.tiempo_inicio
+            # if not self.finalizo_pausa:
+            #     self.finalizo_pausa = True
+            self.tiempo_transcurrido = time.time() - self.tiempo_inicio - self.tiempo_total_pausa
         else:
             self.alpha = 200
             return
@@ -101,6 +119,10 @@ class FormLevel(Form):
         self.paredes_level = Auxiliar.getCsvValues(csv_path)
 
     def start_config(self):
+        self.tiempo_inicio_pausa = time.time()
+        self.tiempo_transcurrido_en_pausa = 0
+        self.tiempo_total_pausa = 0
+        self.finalizo_pausa = True
         self.tiempo_transcurrido = 0
         self.tiempo_inicio = time.time()
         self.puntaje_total = 0
@@ -118,15 +140,14 @@ class FormLevel(Form):
 
     def mostrar_pausa(self):
         self.pauseState = True
-        print("CARGAR FORM PAUSA")
-        pass
+        Form.set_true_sub_active("level_1_options")
 
     def mostrar_retry(self):
         self.finalizo_nivel = True
         self.pauseState = True
         LOSE.play()
+        Form.set_true_sub_active("level_1_options")
         print("CARGAR FORM DERROTA")
-        pass
 
     def mostrar_victoria(self):
         self.finalizo_nivel = True
@@ -134,4 +155,3 @@ class FormLevel(Form):
         print("CARGAR FORM VICTORIA")
         # revisar en bd si supero puntaje
         # unlock level 2
-        pass
