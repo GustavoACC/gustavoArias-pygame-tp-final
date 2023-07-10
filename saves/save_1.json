@@ -1,9 +1,9 @@
 {
 	"name": "A",
 	"unlock_levels": {
-		"level_1": "True",
-		"level_2": "False",
-		"level_3": "False"
+		"level_1": 1,
+		"level_2": 0,
+		"level_3": 0
 	},
 	"best_score_levels": {
 		"level_1": 0,
