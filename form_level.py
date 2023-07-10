@@ -14,6 +14,7 @@ from form_level import *
 from form_opciones import *
 from enemy import *
 import math
+from auxiliar_sql import *
 
 class FormLevel(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, json_level, csv_level, sub_active):
@@ -208,6 +209,8 @@ class FormLevel(Form):
         print(is_nuevo_valor)
 
         # revisar en bd si supero puntaje
+        is_nuevo_score = self.validar_score_bd()
+        print(is_nuevo_score)
         # Cargo el form de victoria
         Form.set_active("main_menu")
 
@@ -217,6 +220,7 @@ class FormLevel(Form):
         Retorno si hubo un cambio en el json
         '''
         retorno =  False
+        self.puntaje_total += math.floor(self.tiempo_maximo - self.tiempo_restante) * 100
         json_values = Auxiliar.getJsonValues("saves/save_1.json")
         match self.name:
             case "level_1":
@@ -240,3 +244,8 @@ class FormLevel(Form):
                 pass
         Auxiliar.setJsonValues("saves/save_1.json", json_values)
         return retorno
+    
+    def validar_score_bd(self):
+        retorno = AuxiliarSQL.revisar_puntaje_scoreboard(self.name, self.puntaje_total)
+        return retorno
+    
