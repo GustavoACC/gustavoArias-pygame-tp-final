@@ -270,9 +270,19 @@
             "col_rest": 8 
         }
     ],
+    "items": [
+        {
+            "x": 200,
+            "y": 700,
+            "puntos": 100,
+            "type": 0
+        }
+    ],
     "player": {
         "x": 62,
         "y": 630,
         "vidas": 2
-    }
+    },
+    "tiempo": 120,
+    "music": "music/Level music #1.mp3"
 }

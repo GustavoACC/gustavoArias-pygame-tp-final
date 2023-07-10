@@ -89,13 +89,11 @@ class Player:
         return retorno
 
     def is_colision_pared_horizontal(self, lista_paredes, delta_x):
-        retorno = False
         for pared in lista_paredes:
-            if pared.rect.colliderect(self.body_collition_rect):
+            if pared.rect.colliderect(self.body_collition_rect) or self.body_collition_rect.x <= LEFT_LEVEL or self.body_collition_rect.x >= RIGHT_LEVEL:
                 self.rect.x -= delta_x
                 self.update_collition_position()
-                retorno = True
-        return retorno
+                
     
     def apply_colision_pared_vertical(self, lista_paredes, delta_y):
         retorno = False

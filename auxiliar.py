@@ -33,3 +33,14 @@ class Auxiliar:
             for row in csv_reader:
                 csv_filas.append(row)
             return csv_filas
+        
+    def playMusic(path):
+        general_config = Auxiliar.getJsonValues(GENERAL_CONFIG_JSON)
+        pygame.mixer.music.stop()
+        pygame.mixer.music.load(path)
+        pygame.mixer.music.play(5)
+        pygame.mixer.music.set_volume(general_config["volume"])
+    
+    def setJsonValues(path, values):
+        with open(path, 'w') as archivo:
+            json.dump(values, archivo)

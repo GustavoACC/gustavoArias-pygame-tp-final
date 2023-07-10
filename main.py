@@ -9,6 +9,7 @@ from gui_level import *
 from form import *
 from form_main_menu import *
 from form_level import *
+from form_opciones import *
 
 screen = pygame.display.set_mode((ANCHO_PANTALLA, ALTO_PANTALLA))
 pygame.init()
@@ -17,6 +18,7 @@ clock = pygame.time.Clock()
 # Inicio los Forms
 form_main_menu = FormMainMenu(name="main_menu", master_surface=screen, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=True)
 form_level_1 = FormLevel(name="level_1", master_surface=screen, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=False, json_level="levels/level-1/start-config.json", csv_level="levels/level-1/paredes_level_1.csv")
+form_option_menu = FormOptionMenu(name="options_menu", master_surface=screen, x=0, y=0, w=ANCHO_PANTALLA, h=ALTO_PANTALLA, color_background=C_ORANGE, color_border=C_BLUE, active=True)
 
 while True:
     lista_eventos = pygame.event.get()

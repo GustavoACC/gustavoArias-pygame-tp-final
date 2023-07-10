@@ -1,3 +1,6 @@
+import pygame
+pygame.mixer.init()
+
 DEBUG = False
 ALTO_PANTALLA = 768
 ANCHO_PANTALLA = 1088
@@ -10,7 +13,11 @@ MAX_HEIGHT_JUMP = 70
 GROUND_LEVEL = 704
 HIGH_LEVEL = 110
 LEFT_LEVEL = 32
-RIGHT_LEVEL = 1056
+RIGHT_LEVEL = 1040
+GENERAL_CONFIG_JSON = "general_config.json"
+
+# Sonidos
+TAKE_ITEM = pygame.mixer.Sound("sounds/mixkit-arcade-retro-changing-tab-206.wav")
 
 # Colores fijos
 C_RED = (255,0,0)
