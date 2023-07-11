@@ -628,5 +628,6 @@
         "vidas": 1
     },
     "tiempo": 50,
-    "music": "music/Panic Version.mp3"
+    "music": "music/Panic Version.mp3",
+    "static_background": "levels/level-2/background_2.png"
 }

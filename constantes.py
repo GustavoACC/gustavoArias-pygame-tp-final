@@ -1,10 +1,11 @@
 import pygame
 pygame.mixer.init()
 
-DEBUG = True
+DEBUG = False
 ALTO_PANTALLA = 768
 ANCHO_PANTALLA = 1088
 PATH_IMAGE = "recursos/"
+PATH_GUI = "recursos/gui/"
 FPS = 30
 VELOCIDAD_X = 6
 VELOCIDAD_Y = 14

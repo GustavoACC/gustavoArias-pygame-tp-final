@@ -402,5 +402,6 @@
         "vidas": 2
     },
     "tiempo": 40,
-    "music": "music/Level music #3.mp3"
+    "music": "music/Level music #3.mp3",
+    "static_background": "levels/level-3/background_3.png"
 }

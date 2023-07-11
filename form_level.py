@@ -169,10 +169,10 @@ class FormLevel(Form):
         self.tiempo_inicio = time.time()
         self.puntaje_total = 0
         self.pauseState = False
-        self.solidImagePause = pygame.image.load("levels/level-1/background_pause.png")
         self.alpha = 0
-        self.cargar_fondo_estatico("levels/level-1/background_1.png")
         self.cargar_json_level(self.json_level)
+        self.cargar_fondo_estatico(self.config_level["static_background"])
+        self.solidImagePause = pygame.image.load(self.config_level["static_background"])
         self.tiempo_maximo = self.config_level["tiempo"]
         self.cargar_csv_level(self.csv_level)
         self.carga_inicial_listas()

@@ -411,5 +411,6 @@
         "vidas": 2
     },
     "tiempo": 120,
-    "music": "music/Level music #1.mp3"
+    "music": "music/Level music #1.mp3",
+    "static_background": "levels/level-1/background_1.png"
 }
