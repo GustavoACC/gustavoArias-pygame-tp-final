@@ -14,10 +14,10 @@ El juego está creado para jugarse como un plataformas al estilo super meat boy,
 
 Teclas de control:
 
-Tecla "D" para moverse a la derecha 
-Tecla "A" para moverse a la izquierda 
-Tecla "W" para saltar 
-Tecla "F10" para reset rapido
+Tecla "D" para moverse a la derecha <br>
+Tecla "A" para moverse a la izquierda <br>
+Tecla "W" para saltar <br>
+Tecla "F10" para reset rapido <br>
 
 ## Desbloqueo de niveles
 
@@ -27,9 +27,9 @@ Para desbloquear un nivel se debe superar el anterior al menos 1 vez obteniendo 
 
 Items los cuales se les puede asignar el valor que se desee desde la configuración del nivel
 
-![aple](https://raw.githubusercontent.com/GustavoACC/gustavoArias-pygame-tp-final/main/recursos/Items/Fruits/Apple.png)
-![banana](https://raw.githubusercontent.com/GustavoACC/gustavoArias-pygame-tp-final/main/recursos/Items/Fruits/Bananas.png)
-![strawberry](https://raw.githubusercontent.com/GustavoACC/gustavoArias-pygame-tp-final/main/recursos/Items/Fruits/Strawberry.png)
+![aple](https://raw.githubusercontent.com/GustavoACC/gustavoArias-pygame-tp-final/main/recursos/Items/Fruits/Apple.png)<br>
+![banana](https://raw.githubusercontent.com/GustavoACC/gustavoArias-pygame-tp-final/main/recursos/Items/Fruits/Bananas.png)<br>
+![strawberry](https://raw.githubusercontent.com/GustavoACC/gustavoArias-pygame-tp-final/main/recursos/Items/Fruits/Strawberry.png)<br>
 
 ## Trampas
 
