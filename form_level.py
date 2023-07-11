@@ -201,25 +201,34 @@ class FormLevel(Form):
         En caso de completar el objetivo del nivel muestro un sub formulario para volver al menu o jugar el siguiente nivel
         Tambien valido el score del jugador para guardarlo si es necesario
         '''
+        self.flag_inicio = False
         self.finalizo_nivel = True
         self.pauseState = True
+
         # Desbloqueo el siguiente nivel y lo guardo en el json
         # Valido si supero algun valor o por primera vez y lo guardo
         is_nuevo_valor = self.is_desbloqueo_local()
-        print(is_nuevo_valor)
 
         # revisar en bd si supero puntaje
         is_nuevo_score = self.validar_score_bd()
-        print(is_nuevo_score)
+
+        # Guardo los valores necesarios para mostrar en el formulario de victoria
+        ultima_partida_values = Auxiliar.getJsonValues("ultima_partida.json")
+        ultima_partida_values["score"] = self.puntaje_total
+        ultima_partida_values["local_score"] = is_nuevo_valor
+        ultima_partida_values["scoreboard"] = is_nuevo_score
+        ultima_partida_values["level"] = self.name
+        Auxiliar.setJsonValues("ultima_partida.json", ultima_partida_values)
+
         # Cargo el form de victoria
-        Form.set_active("main_menu")
+        Form.set_active("win_menu")
 
     def is_desbloqueo_local(self):
         '''
         Valido dependiendo del nivel si es la primera vez jugando, entonces guardo el valor en el json y lo sobreescribo
         Retorno si hubo un cambio en el json
         '''
-        retorno =  False
+        retorno =  0
         self.puntaje_total += math.floor(self.tiempo_maximo - self.tiempo_restante) * 100
         json_values = Auxiliar.getJsonValues("saves/save_1.json")
         match self.name:
@@ -228,18 +237,18 @@ class FormLevel(Form):
                     json_values["unlock_levels"]["level_2"] = 1
                     json_values["best_score_levels"]["level_1"] = self.puntaje_total
                     json_values["best_time_levels"]["level_1"] =  math.floor(self.tiempo_maximo - self.tiempo_restante)
-                    retorno =  True
+                    retorno =  1
             case "level_2":
                 if json_values["best_time_levels"]["level_2"] == 0:
                     json_values["unlock_levels"]["level_3"] = 1
                     json_values["best_score_levels"]["level_2"] = self.puntaje_total
                     json_values["best_time_levels"]["level_2"] =  math.floor(self.tiempo_maximo - self.tiempo_restante)
-                    retorno =  True
+                    retorno =  1
             case "level_3":
                 if json_values["best_time_levels"]["level_3"] == 0:
                     json_values["best_score_levels"]["level_3"] = self.puntaje_total
                     json_values["best_time_levels"]["level_3"] =  math.floor(self.tiempo_maximo - self.tiempo_restante)
-                    retorno =  True
+                    retorno =  1
             case _:
                 pass
         Auxiliar.setJsonValues("saves/save_1.json", json_values)
