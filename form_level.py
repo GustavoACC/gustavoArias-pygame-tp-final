@@ -130,8 +130,6 @@ class FormLevel(Form):
         for item in self.config_level["items"]:
             self.lista_items.append(Item(item["x"], item["y"], int(item["puntos"]), int(item["type"])))
         
-        self.lista_enemigos = []
-        self.lista_enemigos.append(Enemy(385,355, VELOCIDAD_X))
 
     def carga_inicial_jugador(self):
         '''
