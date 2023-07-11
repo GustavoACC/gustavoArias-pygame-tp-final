@@ -4,6 +4,9 @@ from auxiliar import *
 class AuxiliarSQL:
 
     def generar_scoreboard():
+        '''
+        Crea la tabla y la base de datos si es que no existen
+        '''
         with sqlite3.connect("db/scoreboard.db") as conexion:
             try:
                 sentencia = ''' create  table scoreboard
@@ -20,6 +23,10 @@ class AuxiliarSQL:
                 print("La tabla ya existe")
     
     def obtener_mejores_segun_level(form_name):
+        '''
+        Consulto la base para obtener los mejores 5 dependiendo el nivel jugado
+        Devuelvo una lista con los resultados
+        '''
         lista_mejores = []
         with sqlite3.connect("db/scoreboard.db") as conexion:
             try:
@@ -32,6 +39,9 @@ class AuxiliarSQL:
         return lista_mejores
 
     def insertar_puntaje(form_name, score):
+        '''
+        Inserto datos en la tabla
+        '''
         json_values = Auxiliar.getJsonValues("saves/save_1.json")
         with sqlite3.connect("db/scoreboard.db") as conexion:
             try:
@@ -40,6 +50,10 @@ class AuxiliarSQL:
                 print("ERROR EN INSERT")
 
     def revisar_puntaje_scoreboard(form_name, score):
+        '''
+        Analizo si todavia no hay suficientes partidas guardadas,
+        en caso de que ya haya 5 registros reviso si el score a revisar supera alguno de los valores
+        '''
         retorno =  0
         mejores_level = AuxiliarSQL.obtener_mejores_segun_level(form_name)
         if len(mejores_level) < 5:

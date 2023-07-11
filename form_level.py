@@ -129,6 +129,8 @@ class FormLevel(Form):
         self.lista_items = []
         for item in self.config_level["items"]:
             self.lista_items.append(Item(item["x"], item["y"], int(item["puntos"]), int(item["type"])))
+
+        self.lista_enemigos = []
         
 
     def carga_inicial_jugador(self):
@@ -208,7 +210,7 @@ class FormLevel(Form):
         is_nuevo_valor = self.is_desbloqueo_local()
 
         # revisar en bd si supero puntaje
-        is_nuevo_score = self.validar_score_bd()
+        is_nuevo_score = AuxiliarSQL.revisar_puntaje_scoreboard(self.name, self.puntaje_total)
 
         # Guardo los valores necesarios para mostrar en el formulario de victoria
         ultima_partida_values = Auxiliar.getJsonValues("ultima_partida.json")
@@ -250,9 +252,5 @@ class FormLevel(Form):
             case _:
                 pass
         Auxiliar.setJsonValues("saves/save_1.json", json_values)
-        return retorno
-    
-    def validar_score_bd(self):
-        retorno = AuxiliarSQL.revisar_puntaje_scoreboard(self.name, self.puntaje_total)
         return retorno
     

@@ -6,6 +6,10 @@ from gui_label import *
 
 class FormWinMenu(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, sub_active):
+        '''
+        Constructor de la clase,
+        Inicializo los botones para presentarlos
+        '''
         super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active, sub_active)
         self.ultima_partida_values = Auxiliar.getJsonValues("ultima_partida.json")
         self.label_puntaje_final = Label(master=self, x=400, y=100, w=200, h=50, color_border=C_BLACK, image_background="UI_Flat_Frame_01_Horizontal.png", text="Puntaje Final", font="fonts/Minecraft.ttf", font_size=25, font_color=C_WHITE)
@@ -17,6 +21,9 @@ class FormWinMenu(Form):
         self.lista_widget = [self.boton_inicio, self.label_puntaje_final, self.label_puntaje_final_valor]
 
     def update(self, lista_eventos,keys,delta_ms):
+        '''
+        Actualizo los datos buscandolos en el json para mostrar los datos correctos
+        '''
         self.ultima_partida_values = Auxiliar.getJsonValues("ultima_partida.json")
         self.label_puntaje_final_valor = Label(master=self, x=610, y=100, w=200, h=50, color_border=C_BLACK, image_background="UI_Flat_Frame_01_Horizontal.png", text=self.ultima_partida_values["score"], font="fonts/Minecraft.ttf", font_size=25, font_color=C_WHITE)
         self.label_registro_scoreboard = Label(master=self, x=400, y=250, w=400, h=50, color_border=C_BLACK, image_background="UI_Flat_Frame_01_Horizontal.png", text="Nuevo Record en Scoreboard", font="fonts/Minecraft.ttf", font_size=25, font_color=C_WHITE)
@@ -35,7 +42,7 @@ class FormWinMenu(Form):
         for aux_widget in self.lista_widget:
             aux_widget.update(lista_eventos)
 
-    def draw(self): 
+    def draw(self):
         super().draw()
         for aux_widget in self.lista_widget:    
             aux_widget.draw()
