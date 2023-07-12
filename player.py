@@ -77,7 +77,7 @@ class Player:
         if(DEBUG):
             pygame.draw.rect(screen, C_BLACK, self.ground_collition_rect)
             pygame.draw.rect(screen, C_ORANGE, self.body_collition_rect)
-            pygame.draw.rect(screen, C_BLUE, self.rect)
+            # pygame.draw.rect(screen, C_BLUE, self.rect)
             pygame.draw.rect(screen, C_RED, self.vertical_collition_rect)
         self.image = self.animation[self.frame]
         screen.blit(self.image, self.rect)
@@ -144,7 +144,7 @@ class Player:
         No retorna valores
         '''
         for pared in lista_paredes:
-            if pared.rect.colliderect(self.vertical_collition_rect):
+            if pared.rect.colliderect(self.body_collition_rect):
                 if delta_y > 0:
                     self.rect.bottom = pared.rect.top
                     self.update_collition_position()

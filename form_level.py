@@ -15,6 +15,7 @@ from form_opciones import *
 from enemy import *
 import math
 from auxiliar_sql import *
+from spawner import *
 
 class FormLevel(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active, json_level, csv_level, sub_active):
@@ -42,6 +43,7 @@ class FormLevel(Form):
         Valido en los eventos disponibles la tecla de Esc para comenzar una pausa, y la tecla F10 para un reset forzado al nivel
         En caso de no estar en una pausa solicito la actualizacion de los objetos en pantalla asi como continuar el contador del tiempo disponible del nivel
         '''
+        self.delta_ms = delta_ms
         aux_sub_active_form = Form.get_sub_active()
         if(aux_sub_active_form != None):
             self.finalizo_pausa = False
@@ -71,12 +73,13 @@ class FormLevel(Form):
         else:
             self.alpha = 200
             return
+        self.spawner.update(self.player_instance, self.lista_enemigos, self.tiempo_transcurrido)
         for trampa in self.lista_trampas:
             trampa.update(self.pauseState)
         for item in self.lista_items:
             item.update(self.player_instance, self, self.lista_items)
         for enemigo in self.lista_enemigos:
-            enemigo.update(self.pauseState, self.lista_enemigos)
+            enemigo.update(self.pauseState, self.lista_enemigos, self.lista_plataformas, self.lista_paredes, self.player_instance, self.tiempo_transcurrido)
         self.tiempo_restante = self.tiempo_maximo - self.tiempo_transcurrido
         self.player_instance.controlar_jugador(keys, delta_ms, self.pauseState)
         self.player_instance.update(self.pauseState, self.tiempo_transcurrido, self)
@@ -115,12 +118,16 @@ class FormLevel(Form):
             self.lista_plataformas.append(Plataforma(plataforma["x"],plataforma["y"],plataforma["w"],plataforma["h"],plataforma["coll_w"],plataforma["coll_h"],plataforma["type"]))
         
         self.lista_paredes = []
+        self.lista_spawn_enemigo = []
         for indexFila, row in enumerate(self.paredes_level):
             for indexColumna, item in enumerate(row):
+                x = (indexColumna + 2) * 16
+                y = (indexFila + 7) * 16
                 if item != "-1":
-                    x = (indexColumna + 2) * 16
-                    y = (indexFila + 7) * 16
                     self.lista_paredes.append(Plataforma(x, y, 16, 16,16,16, int(item)))
+                else:
+                    self.lista_spawn_enemigo.append(Plataforma(x, y, 16, 16,64,64, int(item)))
+
         
         self.lista_trampas = []
         for trampa in self.config_level["trampas"]:
@@ -177,6 +184,7 @@ class FormLevel(Form):
         self.cargar_csv_level(self.csv_level)
         self.carga_inicial_listas()
         self.carga_inicial_jugador()
+        self.generar_spawner()
         self.gui_player = Gui_Level(self.player_instance.vidas, self.puntaje_total, self.tiempo_maximo)
         Auxiliar.playMusic(self.config_level["music"])
 
@@ -254,3 +262,5 @@ class FormLevel(Form):
         Auxiliar.setJsonValues("saves/save_1.json", json_values)
         return retorno
     
+    def generar_spawner(self):
+        self.spawner = Spawner(self.lista_enemigos, self.lista_spawn_enemigo, self.config_level["enemigos"], self.tiempo_transcurrido)

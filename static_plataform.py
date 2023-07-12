@@ -4,7 +4,11 @@ from auxiliar import *
 
 class Plataforma:
     def __init__(self, x, y, w, h, coll_w, coll_h, type=0) -> None:
-        self.image = Auxiliar.getSurfaceFromSpriteSheet("recursos/terrain/terrain22x11.png", 22, 11)[type]
+        match type:
+            case -1:
+                self.image = Auxiliar.getSurfaceFromSpriteSheet("recursos/terrain/terrain22x11.png", 22, 11)[5]
+            case _:
+                self.image = Auxiliar.getSurfaceFromSpriteSheet("recursos/terrain/terrain22x11.png", 22, 11)[type]
         self.image = pygame.transform.scale(self.image,(w,h))
         self.rect = self.image.get_rect()
         self.rect.x = x

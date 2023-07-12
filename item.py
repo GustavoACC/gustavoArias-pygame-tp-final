@@ -66,7 +66,7 @@ class Item():
         en caso de ser el objeto en este caso tipo 10, se finaliza el juego asi que se llama al metodo del form
         se elimina de la lista si es que colisiono con el jugador
         '''
-        if self.rect.colliderect(player.rect):
+        if self.rect.colliderect(player.body_collition_rect):
             form.puntaje_total += self.puntos
             self.play_sound()
             if self.type == 10:

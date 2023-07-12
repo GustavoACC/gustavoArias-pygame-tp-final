@@ -23,6 +23,7 @@ VICTORY_ITEM = pygame.mixer.Sound("sounds/mixkit-arcade-game-complete-or-approve
 LOSE = pygame.mixer.Sound("sounds/mixkit-player-losing-or-failing-2042.wav")
 HIT = pygame.mixer.Sound("sounds/mixkit-small-hit-in-a-game-2072.wav")
 ACHIVEMENT = pygame.mixer.Sound("sounds/mixkit-quick-positive-video-game-notification-interface-265.wav")
+ENEMY_DEAD = pygame.mixer.Sound("sounds\mixkit-arcade-game-jump-coin-216.wav")
 
 # Colores fijos
 C_RED = (255,0,0)
